@@ -36,26 +36,33 @@ public class FXMLController {
     
     @FXML
     private TextArea txtResult;
+    
+    @FXML
+    private TextArea txtErrore;
 
     @FXML
     void handleInserisci(ActionEvent event) {
     	// Leggi e controlla i dati
     	String nomeEsame = txtEsame.getText() ;
     	if(nomeEsame.length()==0) {
-    		txtResult.setText("ERRORE: nome esame vuoto");
+    		txtErrore.setText("ERRORE: nome esame vuoto");
     		return ;
     	}
     	
     	String votoEsame = txtVoto.getText();
     	int votoInt = 0 ;
+    	if(votoEsame.equals("")) {
+    		txtErrore.setText("ERRORE: voto esame vuoto");
+    		return ;
+    	}
     	try {
     		votoInt = Integer.parseInt(votoEsame);
     	} catch(NumberFormatException ex) {
-    		txtResult.setText("ERRORE: il voto deve essere numerico");
+    		txtErrore.setText("ERRORE: il voto deve essere numerico");
     		return ;
     	}
     	if(votoInt<18 || votoInt>30) {
-    		txtResult.setText("ERRORE: il voto deve essere compreso tra 18 e 30");
+    		txtErrore.setText("ERRORE: il voto deve essere compreso tra 18 e 30");
     		return ;
     	}
     	
@@ -69,7 +76,7 @@ public class FXMLController {
 //    	}
     	LocalDate data = pickerEsame.getValue() ;
     	if(data==null) {
-    		txtResult.setText("ERRORE: la data è errata o mancante");
+    		txtErrore.setText("ERRORE: la data è errata o mancante");
     		return ;
     	}
     	    	
@@ -83,6 +90,7 @@ public class FXMLController {
     	txtVoto.clear();
 //    	txtData.clear();
     	pickerEsame.setValue(null) ;
+    	txtErrore.setText("");
     }
     
     public void setModel(Libretto model) {
